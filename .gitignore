@@ -1,0 +1,20 @@
+# === Terraform (global) ===
+**/terraform.tfvars
+**/*.tfvars
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.backup
+
+# === Ansible ===
+**/*.retry
+
+# === Secrets ===
+**/.env
+**/.env.*
+
+# === IDE ===
+.vscode/
+.idea/
+
+# === OS ===
+.DS_Store
