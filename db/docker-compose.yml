@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: devops01-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: devops01
+      MYSQL_USER: app
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

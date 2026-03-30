@@ -1,0 +1,29 @@
+# base OS setup
+
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install base packages
+  apt:
+    name:
+      - curl
+      - wget
+      - git
+      - unzip
+      - htop
+      - net-tools
+      - ca-certificates
+      - gnupg
+      - lsb-release
+      - ufw
+    state: present
+
+- name: Enable UFW and allow SSH
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+    state: enabled

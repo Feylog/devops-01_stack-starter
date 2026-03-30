@@ -1,0 +1,13 @@
+# main playbook
+
+---
+- name: Configure DevOps VM
+  hosts: all
+  become: true
+
+  roles:
+    - common
+    - docker
+    - k3s
+    - nginx
+    - monitoring

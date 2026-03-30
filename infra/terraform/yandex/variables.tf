@@ -2,7 +2,6 @@ variable "token" { type = string }
 variable "cloud_id" { type = string }
 variable "folder_id" { type = string }
 variable "ssh_pubkey" { type = string }
-variable "ansible_ssh_pubkey" { type = string }
 
 variable "zone" {
   type    = string

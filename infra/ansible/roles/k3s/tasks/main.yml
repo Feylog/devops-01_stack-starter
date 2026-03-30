@@ -1,0 +1,27 @@
+---
+- name: Install k3s
+  shell: curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
+  args:
+    creates: /usr/local/bin/k3s
+
+- name: Wait for k3s to be ready
+  command: k3s kubectl get nodes
+  register: result
+  until: result.rc == 0
+  retries: 10
+  delay: 5
+
+- name: Create .kube directory
+  file:
+    path: /home/ubuntu/.kube
+    state: directory
+    owner: ubuntu
+    mode: '0755'
+
+- name: Copy kubeconfig for ubuntu user
+  copy:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /home/ubuntu/.kube/config
+    remote_src: yes
+    owner: ubuntu
+    mode: '0600'

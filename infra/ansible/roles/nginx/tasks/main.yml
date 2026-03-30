@@ -1,0 +1,22 @@
+# reverse proxy
+
+---
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Enable and start Nginx
+  systemd:
+    name: nginx
+    enabled: yes
+    state: started
+
+- name: Allow HTTP/HTTPS in UFW
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - "80"
+    - "443"

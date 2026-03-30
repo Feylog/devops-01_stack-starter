@@ -107,3 +107,39 @@
     terraform apply tfplan
 
 Следующий пункт:
+
+Надо создать в папке ansible файлы соответствующей задаче:
+  1) После вводим проверяющую команду и запускаем ansible:
+      ansible all -m ping
+      ansible-playbook playbook.yml
+  2) после заходим на нашу вм по ssh и проверяем доступность сервисов:
+      # Docker
+      docker --version
+      docker ps
+      # k3s / Kubernetes
+      kubectl get nodes
+      kubectl get pods -A
+      # Nginx
+      systemctl status nginx
+      # Node Exporter (monitoring)
+      systemctl status node_exporter
+      curl localhost:9100/metrics | head
+
+Следующий пункт:
+Следующий пункт:
+k8s/
+├── namespace.yml        # isolated space for your project
+├── configmap.yml        # non-secret config (DB_HOST, DB_NAME, DB_PORT)
+├── secret.yml           # sensitive data (DB_USER, DB_PASS)
+├── mysql-deployment.yml # runs MySQL pod + persistent storage
+├── mysql-service.yml    # makes MySQL reachable by name
+├── app-deployment.yml   # runs your FastAPI pods
+├── app-service.yml      # exposes your app to the network
+
+Internet → app-service → app-deployment (FastAPI pods)
+                              ↓
+                         configmap + secret (env vars)
+                              ↓
+                         mysql-service → mysql-deployment (MySQL pod)
+                              ↓
+                         PersistentVolume (data survives restarts)

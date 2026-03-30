@@ -37,6 +37,6 @@ resource "yandex_compute_instance" "vm" {
   }
 
   metadata = {
-    ssh-keys = "${var.vm_user}:${var.ssh_pubkey}\n${var.vm_user}:${var.ansible_ssh_pubkey}"
+    ssh-keys = "${var.vm_user}:${var.ssh_pubkey}"
   }
 }
