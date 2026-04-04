@@ -9,6 +9,17 @@ resource "yandex_vpc_subnet" "subnet" {
   v4_cidr_blocks = ["10.10.0.0/24"]
 }
 
+resource "yandex_vpc_address" "static_ip" {
+  name = "devops01-static-ip"
+
+  external_ipv4_address {
+    zone_id = "ru-central1-a"
+  }
+}
+output "vm_static_ip" {
+  value = yandex_vpc_address.static_ip.external_ipv4_address[0].address
+}
+
 data "yandex_compute_image" "ubuntu" {
   family = "ubuntu-2204-lts"
 }
@@ -34,6 +45,7 @@ resource "yandex_compute_instance" "vm" {
   network_interface {
     subnet_id = yandex_vpc_subnet.subnet.id
     nat       = true
+    nat_ip_address = yandex_vpc_address.static_ip.external_ipv4_address[0].address
   }
 
   metadata = {
