@@ -27,3 +27,9 @@
     port: "22"
     proto: tcp
     state: enabled
+
+- name: Allow node_exporter in UFW
+  community.general.ufw:
+    rule: allow
+    port: "9100"
+    proto: tcp
